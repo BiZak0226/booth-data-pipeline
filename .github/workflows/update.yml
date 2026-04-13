@@ -37,9 +37,11 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git pull --rebase
+          git fetch origin
+          git reset --hard origin/main
 
           git add .
+
           git diff --cached --quiet || (
             git commit -m "auto: update cw_332"
             git push
