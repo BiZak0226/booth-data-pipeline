@@ -2,34 +2,33 @@ name: Update Booth Data
 
 on:
   schedule:
-    - cron: "0 15 * * *"  # 한국 자정
+    - cron: "0 15 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write   
 
 jobs:
   run:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4   # 🔥 v3 → v4
+      - uses: actions/checkout@v4
 
-      # Node
-      - uses: actions/setup-node@v4   # 🔥 v3 → v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # Python
-      - uses: actions/setup-python@v5   # 🔥 v4 → v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"   # 🔥 핵심 수정
+          python-version: "3.11"
 
       - run: npm install
       - run: pip install -r requirements.txt
 
-      # 실행
       - run: node scripts/fetch.js
       - run: python scripts/transform.py
 
-      # 커밋
       - name: commit
         run: |
           git diff --quiet || (
