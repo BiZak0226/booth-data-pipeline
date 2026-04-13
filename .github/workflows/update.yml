@@ -1,5 +1,3 @@
-# .github/workflows/update.yml
-
 name: Update Booth Data
 
 on:
@@ -12,26 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4   # 🔥 v3 → v4
 
       # Node
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4   # 🔥 v3 → v4
         with:
-          node-version: 18
+          node-version: 20
 
       # Python
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5   # 🔥 v4 → v5
         with:
-          python-version: 3.10
+          python-version: "3.11"   # 🔥 핵심 수정
 
       - run: npm install
       - run: pip install -r requirements.txt
 
-      # 🔥 실행 순서
-      - run: npm run fetch
+      # 실행
+      - run: node scripts/fetch.js
       - run: python scripts/transform.py
 
-      # 변경 있을 때만 커밋
+      # 커밋
       - name: commit
         run: |
           git diff --quiet || (
