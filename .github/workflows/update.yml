@@ -45,4 +45,9 @@ jobs:
           git diff --cached --quiet || (
             git commit -m "auto: update cw_332"
             git push
+          )          git add .
+
+          git diff --cached --quiet || (
+            git commit -m "auto: update cw_332"
+            git push
           )
